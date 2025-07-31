@@ -3,6 +3,7 @@ package crud
 import grails.converters.JSON
 
 class AdminController {
+    AdminService adminService
 
 
     def index() {
@@ -70,49 +71,48 @@ class AdminController {
 
 
 
+    def addBook() {
+        Map result = [:]
+       String bookName= request.getParameter('bookName')
+        String bookAuthor= request.getParameter('bookAuthor')
+        int    bookEdition=request.getParameter('bookEdition').toLong()
+        println(bookEdition)
+        double bookPrice= request.getParameter('bookPrice').toDouble()
+        boolean bookAvailable= request.getParameter('bookAvailable')
+
+        if (adminService.saveBook(bookName,bookAuthor,bookEdition,bookPrice,bookAvailable)) {
+            result = [status: 'success', message: 'Book Added']
+        } else {
+            result = [status: 'fail', message: 'Validation failed', errors: book.errors.allErrors]
+        }
+
+        render(result as JSON)
+    }
+
 //    def addBook() {
-//        Map result = [:]
+//        if (request.method == 'GET') {
+//            render(view: 'addBook')
+//            return
+//        }
+//
+//        // POST: save book
 //        Book book = new Book(
-//                bookName: request.getParameter('bookName'),
-//                bookAuthor: request.getParameter('bookAuthor'),
-//                bookEdition: request.getParameter('bookEdition'),
-//                bookPrice: request.getParameter('bookPrice'),
-//                bookAvailable: request.getParameter('bookAvailable')
+//                bookName: params.bookName,
+//                bookAuthor: params.bookAuthor,
+//                bookEdition: params.bookEdition,
+//                bookPrice: params.bookPrice,
+//                bookAvailable: params.bookAvailable,
 //        )
 //
 //        if (book.save(flush: true)) {
-//            result = [status: 'success', message: 'Book Added']
+//            flash.message = "Book added successfully"
+////            render(result as JSON)
+//            redirect(action: 'showBooks')
 //        } else {
-//            result = [status: 'fail', message: 'Validation failed', errors: book.errors.allErrors]
-//        }
-//
-//        render(result as JSON)
-//    }
-
-    def addBook() {
-        if (request.method == 'GET') {
-            render(view: 'addBook')
-            return
-        }
-
-        // POST: save book
-        Book book = new Book(
-                bookName: params.bookName,
-                bookAuthor: params.bookAuthor,
-                bookEdition: params.bookEdition,
-                bookPrice: params.bookPrice,
-                bookAvailable: params.bookAvailable,
-        )
-
-        if (book.save(flush: true)) {
-            flash.message = "Book added successfully"
 //            render(result as JSON)
-            redirect(action: 'showBooks')
-        } else {
-            render(result as JSON)
-            render(view: 'addBook', model: [book: book])
-        }
-    }
+//            render(view: 'addBook', model: [book: book])
+//        }
+//    }
 
 
     def updateUser() {

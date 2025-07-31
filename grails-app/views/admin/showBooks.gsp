@@ -24,11 +24,11 @@
         </tr>
     </g:each>
     <tr>
-        <td>${book.bookName}</td>
-        <td>${book.bookAuthor}</td>
-        <td>${book.bookEdition}</td>
-        <td>${book.bookPrice}</td>
-        <td>${book.bookAvailable}</td>
+%{--        <td>${book.bookName}</td>--}%
+%{--        <td>${book.bookAuthor}</td>--}%
+%{--        <td>${book.bookEdition}</td>--}%
+%{--        <td>${book.bookPrice}</td>--}%
+%{--        <td>${book.bookAvailable}</td>--}%
         <td>
             <g:form controller="admin" action="delBook" method="post">
                 <g:hiddenField name="bookName" value="${book.bookName}"/>

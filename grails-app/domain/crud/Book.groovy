@@ -4,12 +4,12 @@ class Book {
 
     String bookName
     String bookAuthor
-    String bookEdition
-    String bookPrice
-    String bookAvailable
+    int bookEdition
+    double bookPrice
+    boolean bookAvailable
 
-    static belongsTo = [User]  // optional
-    static hasMany = [buyers: User] // reverse
+    static belongsTo = [User]
+    static hasMany = [buyers: User]
 
     static constraints = {
     }

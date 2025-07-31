@@ -13,8 +13,10 @@
 <ul>
     <li><g:link action="addUser">Add User</g:link></li>
     <li><g:link action="showUsers">Show Users</g:link></li>
-    <li><g:link action="addBook">Add Book</g:link></li>
-    <li><g:link action="showBooks">Show Books</g:link></li>
+%{--    <li><g:link action="updateUser">Update Users</g:link></li>--}%
+    <li><g:link action="addBook">Add Books</g:link></li>
+    <li><g:link action="showBooks">Show Book</g:link></li>
+%{--    <li><g:link action="updateBook">Update Books</g:link></li>--}%
     <li><g:link controller="login" action="logout">Logout</g:link></li>
 </ul>
 </body>
