@@ -52,8 +52,7 @@
     </tbody>
 
 </table>
-
-<li><g:link action="myBooks">My Books</g:link></li>
+<br>
 <a href="${createLink(controller:'user', action:'index')}">Back to User Dashboard</a>
 </body>
 </html>

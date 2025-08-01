@@ -50,6 +50,13 @@
     <label>Password:</label>
     <g:passwordField name="password"/><br/>
 
+    <label>Role:</label>
+    <g:textField name="role"/><br/>
+
+
+
+
+
     <g:submitButton name="submit" value="Add User"/>
 </g:form>
 </body>

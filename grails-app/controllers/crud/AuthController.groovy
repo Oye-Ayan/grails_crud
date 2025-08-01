@@ -7,8 +7,8 @@ class AuthController {
     }
 
     def loginSubmit() {
-        def email = params.email
-        def password = params.password
+        def email = request.getParameter('email')
+        def password = request.getParameter('password')
 
         def user = User.findByEmailAndPassword(email, password)
 

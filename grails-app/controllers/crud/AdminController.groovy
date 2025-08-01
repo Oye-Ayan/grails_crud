@@ -45,28 +45,23 @@ class AdminController {
             render(view: 'addUser') // Show the form
             return
         }
-
-        // Else POST: process the form
-        User user = new User(
-                firstName: params.firstName,
-                lastName: params.lastName,
-                email: params.email,
-                phone: params.phone,
-                title: params.title,
-                password: params.password,
-                role: 'user'
-        )
-
-        if (user.save(flush: true)) {
-            flash.message = "User added successfully"
-            render(result as JSON)
-            redirect(action: 'showUsers')
+                String firstName = request.getParameter('firstName')
+                String lastName=request.getParameter('lastName')
+                String email= request.getParameter('email')
+                String phone= request.getParameter('phone')
+                String title= request.getParameter('title')
+                String password=request.getParameter('password')
+                String role= request.getParameter('role')
+//        User user=adminService.saveUser(firstName,lastName,email,phone,title,password,role)
+        if (adminService.saveUser(firstName,lastName,email,phone,title,password,role)) {
+            result=[status: 'success', message: "User Added"]
 
         } else {
-            render(result as JSON)
-            render(view: 'addUser', model: [user: user])
+            result = [status: 'fail', message: 'Validation failed']
 
         }
+        render(result as JSON)
+
     }
 
 
@@ -75,15 +70,14 @@ class AdminController {
         Map result = [:]
        String bookName= request.getParameter('bookName')
         String bookAuthor= request.getParameter('bookAuthor')
-        int    bookEdition=request.getParameter('bookEdition').toLong()
-        println(bookEdition)
+        int bookEdition=request.getParameter('bookEdition').toLong()
         double bookPrice= request.getParameter('bookPrice').toDouble()
         boolean bookAvailable= request.getParameter('bookAvailable')
 
         if (adminService.saveBook(bookName,bookAuthor,bookEdition,bookPrice,bookAvailable)) {
             result = [status: 'success', message: 'Book Added']
         } else {
-            result = [status: 'fail', message: 'Validation failed', errors: book.errors.allErrors]
+            result = [status: 'fail', message: 'Validation failed']
         }
 
         render(result as JSON)
@@ -118,6 +112,7 @@ class AdminController {
     def updateUser() {
         Map result = [:]
 
+
         String email = request.getParameter("email")
         if (!email) {
             result = [status: 'fail', message: 'Email is required to identify user']
@@ -132,14 +127,15 @@ class AdminController {
             return
         }
 
-        user.firstName = request.getParameter("firstName") ?: user.firstName
-        user.lastName = request.getParameter("lastName") ?: user.lastName
-        user.phone = request.getParameter("phone") ?: user.phone
-        user.title = request.getParameter("title") ?: user.title
-        user.password = request.getParameter("password") ?: user.password
+        String firstName = request.getParameter("firstName") ?: user.firstName
+        String lastName = request.getParameter("lastName") ?: user.lastName
+        String phone = request.getParameter("phone") ?: user.phone
+        String title = request.getParameter("title") ?: user.title
+        String password = request.getParameter("password") ?: user.password
+        String role = request.getParameter("role") ?: user.role
 
 
-        if (user.save(flush: true)) {
+        if (adminService.updateUser(email, firstName, lastName, phone, title, password, role)) {
             result = [status: 'success', message: 'User updated']
         } else {
             result = [status: 'fail', message: 'Validation failed', errors: user.errors.allErrors]
@@ -163,15 +159,17 @@ class AdminController {
             render(result as JSON)
             return
         }
-        book.bookAuthor = request.getParameter('bookAuthor') ?: book.bookAuthor
-        book.bookAvailable = request.getParameter('bookAvailable') ?: book.bookAvailable
-        book.bookPrice = request.getParameter('bookPrice') ?: book.bookPrice
-        book.bookEdition = request.getParameter('bookEdition') ?: book.bookEdition
+        String bookAuthor= request.getParameter('bookAuthor')?:book.bookAuthor
+        int bookEdition=request.getParameter('bookEdition').toLong()?:book.bookEdition
+        println(bookEdition)
+        double bookPrice= request.getParameter('bookPrice').toDouble()?:book.bookPrice
+        boolean bookAvailable= request.getParameter('bookAvailable')?:book.bookAvailable
 
-        if (book.save(flush: true)) {
+        try {
+            adminService.updateBook(bookName,bookAuthor,bookEdition,bookPrice,bookAvailable)
             result = [status: 'success', message: 'Book updated']
-        } else {
-            result = [status: 'fail', message: 'Validation failed', errors: book.errors.allErrors]
+        }catch(Exception e) {
+            result = [status: 'fail', message: 'Validation failed', errors: e.message]
         }
 
         render(result as JSON)
@@ -196,7 +194,7 @@ class AdminController {
         }
 
         try {
-            user.delete(flush: true)
+            adminService.delUser(email)
             result = [status: 'success', message: 'User deleted']
         } catch (Exception e) {
             result = [status: 'fail', message: 'Error during deletion', error: e.message]
@@ -222,7 +220,7 @@ class AdminController {
             return
         }
         try {
-            book.delete(flush: true)
+            adminService.delBook(bookName)
             result = [status: 'success', message: 'Book deleted']
         } catch (Exception e) {
             result = [status: 'fail', message: 'Error during deletion', error: e.message]
@@ -233,51 +231,12 @@ class AdminController {
 
 
     def showUsers() {
-        Map result = [:]
-
-        List<User> users = User.list()
-
-        result = [
-                status: 'success',
-                total : users.size(),
-                users : users.collect { user ->
-                    [
-                            id       : user.id,
-                            firstName: user.firstName,
-                            lastName : user.lastName,
-                            email    : user.email,
-                            phone    : user.phone,
-                            title    : user.title,
-                            enabled  : user.enabled
-                    ]
-                }
-        ]
-        render(view: "showUsers", model: [users: users])
-
+        Map result = adminService.showUsers()
         render(result as JSON)
     }
 
     def showBooks() {
-        Map result = [:]
-        List<Book> books = Book.list()
-
-        result = [
-                status: 'success',
-                total : books.size(),
-                books : books.collect { book ->
-                    [
-                            id           : book.id,
-                            bookName     : book.bookName,
-                            bookAuthor   : book.bookAuthor,
-                            bookPrice    : book.bookPrice,
-                            bookAvailable: book.bookAvailable,
-                            bookEdition  : book.bookEdition
-                    ]
-                }
-        ]
-
-        render(view: "showBooks", model: [books: books])
-
+        Map result = adminService.showBooks()
         render(result as JSON)
     }
 

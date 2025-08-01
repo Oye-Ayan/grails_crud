@@ -13,6 +13,7 @@
 <ul>
     <li><g:link action="booksList">View Books</g:link></li>
     <li><g:link action="myBooks">My Books</g:link></li>
+    <li><g:link action="myPurchases">My Purchase</g:link></li>
     <li><g:link action="changePassword">Change Password</g:link></li>
     <li><g:link controller="login" action="logout">Logout</g:link></li>
 </ul>

@@ -8,7 +8,7 @@ class User {
     String title
     String password
     Boolean enabled = true
-    String role = "user" // can be "admin" or "user"
+    String role  // can be "admin" or "user"
     static hasMany = [purchasedBooks: Book]
 
     static constraints = {
