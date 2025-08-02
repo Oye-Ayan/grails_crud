@@ -80,7 +80,7 @@ class AdminController {
             result = [status: 'fail', message: 'Validation failed']
         }
 
-        render(result as JSON)
+        render(view: 'addBook')
     }
 
 //    def addBook() {
@@ -141,7 +141,7 @@ class AdminController {
             result = [status: 'fail', message: 'Validation failed', errors: user.errors.allErrors]
         }
 
-        render(result as JSON)
+        render(view: 'updateUser')
     }
 
     def updateBook() {
@@ -172,8 +172,7 @@ class AdminController {
             result = [status: 'fail', message: 'Validation failed', errors: e.message]
         }
 
-        render(result as JSON)
-    }
+        render(view: 'updateBook')    }
 
 
     def delUser() {
@@ -232,12 +231,12 @@ class AdminController {
 
     def showUsers() {
         Map result = adminService.showUsers()
-        render(result as JSON)
+        [users: result.users]
     }
 
     def showBooks() {
         Map result = adminService.showBooks()
-        render(result as JSON)
+        [books: result.books]
     }
 
     def beforeInterceptor = [action: this.&checkAdminSession]

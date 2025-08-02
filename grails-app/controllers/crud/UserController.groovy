@@ -53,7 +53,7 @@ class UserController {
     def myPurchases() {
         def sessionUser = session.user
         def purchases = userService.getMyPurchases(sessionUser.id)
-        def topBooks = userService.getBooksSortedByPopularity(sessionUser.id)
+        def topBooks = userService.getBooksSortedByPopularity()
 
         render(view: "myPurchases", model: [purchases: purchases, topBooks: topBooks])
     }
