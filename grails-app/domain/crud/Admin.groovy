@@ -7,7 +7,7 @@ class Admin {
         String phone
         String title
         String password
-        Boolean enabled
+        Boolean enabled ='true'
         String role
 
         static constraints = {

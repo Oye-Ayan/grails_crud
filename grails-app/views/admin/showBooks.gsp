@@ -11,97 +11,166 @@
     <title>All Books</title>
     <style>
     body {
-        font-family: 'Arial', sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f4f4f4;
-        color: #333;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f6f8;
     }
-    h2 {
+
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        background-color: #2c3e50;
+        position: fixed;
+        left: 0;
+        top: 0;
+        padding-top: 40px;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        color: white;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .sidebar a {
+        display: block;
+        color: white;
+        padding: 15px 30px;
+        text-decoration: none;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    .sidebar a:hover {
+        background-color: #34495e;
+    }
+
+    .main-content {
+        margin-left: 250px;
+        padding: 30px;
+    }
+
+    h2.title {
         text-align: center;
         color: #2c3e50;
-        padding: 20px 0;
-        background-color: #34495e;
-        color: white;
-        margin: 0 0 20px 0;
-        width: 100%;
+        margin-bottom: 30px;
     }
+
     table {
-        width: 90%;
-        margin: 20px auto;
+        width: 100%;
         border-collapse: collapse;
         background-color: white;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+
     th, td {
-        padding: 12px;
+        padding: 12px 16px;
+        border: 1px solid #e0e0e0;
         text-align: left;
-        border: 1px solid #ddd;
     }
+
     th {
         background-color: #2c3e50;
         color: white;
     }
+
     tr:nth-child(even) {
         background-color: #f9f9f9;
     }
+
     tr:hover {
-        background-color: #e0e0e0;
-        transition: background-color 0.3s ease;
+        background-color: #ecf0f1;
     }
-    g\\:submitButton {
+
+    form {
+        margin: 0;
+        display: inline;
+    }
+
+    input[type="submit"] {
         background-color: #e74c3c;
         color: white;
-        padding: 8px 12px;
         border: none;
+        padding: 6px 12px;
         border-radius: 4px;
         cursor: pointer;
-        font-weight: bold;
+        font-size: 14px;
     }
-    g\\:submitButton:hover {
+
+    input[type="submit"]:hover {
         background-color: #c0392b;
     }
-    a {
-        display: block;
+
+    .center-btn {
         text-align: center;
-        margin: 30px auto;
-        text-decoration: none;
-        color: #1abc9c;
-        font-weight: bold;
-        font-size: 16px;
+        margin-top: 30px;
     }
-    a:hover {
-        color: #16a085;
+
+    .back-link {
+        display: inline-block;
+        text-decoration: none;
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .back-link:hover {
+        background-color: #2980b9;
     }
     </style>
 </head>
 <body>
-<h2>Books List</h2>
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Author</th>
-        <th>Edition</th>
-        <th>Price</th>
-        <th>Available</th>
-        <th>Action</th>
-    </tr>
-    <g:each in="${books}" var="book">
+
+<div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="${createLink(controller:'admin', action:'index')}">Dashboard</a>
+    <a href="${createLink(controller:'admin', action:'addBook')}">Add Book</a>
+    <a href="${createLink(controller:'admin', action:'addUser')}">Add User</a>
+    <a href="${createLink(controller:'auth', action:'logout')}">Logout</a>
+</div>
+
+<div class="main-content">
+    <h2 class="title">Books List</h2>
+
+    <table>
+        <thead>
         <tr>
-            <td>${book.bookName}</td>
-            <td>${book.bookAuthor}</td>
-            <td>${book.bookEdition}</td>
-            <td>${book.bookPrice}</td>
-            <td>${book.bookAvailable}</td>
-            <td>
-                <g:form controller="admin" action="delBook" method="post">
-                    <g:hiddenField name="bookName" value="${book.bookName}"/>
-                    <g:submitButton name="delete" value="Delete"/>
-                </g:form>
-            </td>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Edition</th>
+            <th>Price</th>
+            <th>Available</th>
+            <th>Action</th>
         </tr>
-    </g:each>
-</table>
-<a href="${createLink(controller:'admin', action:'index')}">Back to Admin Dashboard</a>
+        </thead>
+        <tbody>
+        <g:each in="${books}" var="book">
+            <tr>
+                <td>${book.bookName}</td>
+                <td>${book.bookAuthor}</td>
+                <td>${book.bookEdition}</td>
+                <td>${book.bookPrice}</td>
+                <td>${book.bookAvailable}</td>
+                <td>
+                    <g:form controller="admin" action="delBook" method="post">
+                        <g:hiddenField name="bookName" value="${book.bookName}"/>
+                        <input type="submit" value="Delete"/>
+                    </g:form>
+                </td>
+            </tr>
+        </g:each>
+        </tbody>
+    </table>
+
+    <div class="center-btn">
+        <a href="${createLink(controller:'admin', action:'index')}" class="back-link">Back to Admin Dashboard</a>
+    </div>
+</div>
+
 </body>
 </html>

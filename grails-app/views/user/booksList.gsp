@@ -1,7 +1,3 @@
-<%--
-  Redesigned Available Books Page
-  Matches style of User and Admin Dashboard
---%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
