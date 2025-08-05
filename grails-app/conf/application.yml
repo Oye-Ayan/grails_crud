@@ -8,7 +8,7 @@ grails:
         host: smtp.gmail.com
         port: 587
         username: morning.star.please@gmail.com
-        password: ecakpwnbqnjzfmtg
+        password: ""
         props:
             mail.smtp.auth: true
             mail.smtp.starttls.enable: true
