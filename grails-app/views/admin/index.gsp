@@ -83,8 +83,10 @@
         <h2>Admin Panel</h2>
         <g:link class="nav-link" action="addUser">Add User</g:link>
         <g:link class="nav-link" action="showUsers">Show Users</g:link>
+        <g:link class="nav-link" action="updateUser">Update Users</g:link>
         <g:link class="nav-link" action="addBook">Add Books</g:link>
         <g:link class="nav-link" action="showBooks">Show Books</g:link>
+        <g:link class="nav-link" action="updateBook">Update Books</g:link>
         <g:link class="nav-link" controller="auth" action="logout">Logout</g:link>
     </div>
 

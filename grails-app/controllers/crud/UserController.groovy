@@ -18,8 +18,8 @@ class UserController {
     }
 
 
-    def userDashboard() {
-        render(view: "userDashboard")
+    def changePass() {
+        render(view: "changePassword")
     }
 
     def booksList() {
@@ -37,7 +37,7 @@ class UserController {
 
         def result = userService.changePassword(sessionUser.id,oldPassword, newPassword)
         flash.message = result.message
-        redirect(action: 'userDashboard')
+        redirect(action: 'changePass')
     }
 
 

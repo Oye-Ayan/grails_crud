@@ -3,6 +3,15 @@ grails:
     profile: web
     codegen:
         defaultPackage: crud
+
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: morning.star.please@gmail.com
+        password: ecakpwnbqnjzfmtg
+        props:
+            mail.smtp.auth: true
+            mail.smtp.starttls.enable: true
 info:
     app:
         name: '@info.app.name@'

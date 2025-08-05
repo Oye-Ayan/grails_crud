@@ -7,10 +7,10 @@ class Admin {
         String phone
         String title
         String password
-        Boolean enabled ='true'
+        Boolean enabled =true
         String role
 
         static constraints = {
-            email unique: true
+                email email: true, unique: true
         }
     }

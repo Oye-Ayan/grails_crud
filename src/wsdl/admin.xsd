@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://schemas.ericsson.com/vas/" attributeFormDefault="unqualified" elementFormDefault="qualified"
+
+           targetNamespace="http://schemas.ericsson.com/vas/">
+
+<xs:element name="addUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="firstName" type="xs:string"/>
+                <xs:element name="lastName" type="xs:string"/>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="phone" type="xs:string"/>
+                <xs:element name="title" type="xs:string"/>
+                <xs:element name="password" type="xs:string"/>
+                <xs:element name="role" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="addUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

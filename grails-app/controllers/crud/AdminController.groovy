@@ -6,6 +6,10 @@ class AdminController {
     AdminService adminService
 
 
+
+
+
+
     def index() {
         render(view: "index")
     }
@@ -15,30 +19,7 @@ class AdminController {
         render(view: "adminDashboard")
     }
 
-//    def addUser() {
-//        if (request.method == 'GET') {
-//            render(view: 'addUser') // Show the form
-//            return
-//        }
-//
-//        // Else POST: process the form
-//        User user = new User(
-//                firstName: params.firstName,
-//                lastName: params.lastName,
-//                email: params.email,
-//                phone: params.phone,
-//                title: params.title,
-//                password: params.password,
-//                role: 'user'
-//        )
-//
-//        if (user.save(flush: true)) {
-//            flash.message = "User added successfully"
-//            redirect(action: 'showUsers')
-//        } else {
-//            render(view: 'addUser', model: [user: user])
-//        }
-//    }
+
     def addUser() {
         Map result= [:]
         if (request.method == 'GET') {
@@ -61,6 +42,7 @@ class AdminController {
 
         }
         render(result as JSON)
+        render(view: 'showUsers')
 
     }
 
@@ -68,9 +50,13 @@ class AdminController {
 
     def addBook() {
         Map result = [:]
+        if (request.method == 'GET') {
+            render(view: 'addBook') // Show the form
+            return
+        }
        String bookName= request.getParameter('bookName')
         String bookAuthor= request.getParameter('bookAuthor')
-        int bookEdition=request.getParameter('bookEdition').toLong()
+        int bookEdition=request.getParameter('bookEdition').toInteger()
         double bookPrice= request.getParameter('bookPrice').toDouble()
         boolean bookAvailable= request.getParameter('bookAvailable')
 
@@ -79,40 +65,17 @@ class AdminController {
         } else {
             result = [status: 'fail', message: 'Validation failed']
         }
-
-        render(view: 'addBook')
+        render(result as JSON)
+        render(view: 'showBooks')
     }
-
-//    def addBook() {
-//        if (request.method == 'GET') {
-//            render(view: 'addBook')
-//            return
-//        }
-//
-//        // POST: save book
-//        Book book = new Book(
-//                bookName: params.bookName,
-//                bookAuthor: params.bookAuthor,
-//                bookEdition: params.bookEdition,
-//                bookPrice: params.bookPrice,
-//                bookAvailable: params.bookAvailable,
-//        )
-//
-//        if (book.save(flush: true)) {
-//            flash.message = "Book added successfully"
-////            render(result as JSON)
-//            redirect(action: 'showBooks')
-//        } else {
-//            render(result as JSON)
-//            render(view: 'addBook', model: [book: book])
-//        }
-//    }
 
 
     def updateUser() {
         Map result = [:]
-
-
+        if (request.method == 'GET') {
+            render(view: 'updateUser')
+            return
+        }
         String email = request.getParameter("email")
         if (!email) {
             result = [status: 'fail', message: 'Email is required to identify user']
@@ -140,12 +103,16 @@ class AdminController {
         } else {
             result = [status: 'fail', message: 'Validation failed', errors: user.errors.allErrors]
         }
-
-        render(view: 'updateUser')
+        render(result as JSON)
+        redirect(controller:"admin", action:"showUsers")
     }
 
     def updateBook() {
         Map result = [:]
+        if (request.method == 'GET') {
+            render(view: 'updateBook')
+            return
+        }
         String bookName = request.getParameter('bookName')
         if (!bookName) {
             result = [status: 'fail', message: 'BOOK NAME is required to identify Book']
@@ -161,7 +128,6 @@ class AdminController {
         }
         String bookAuthor= request.getParameter('bookAuthor')?:book.bookAuthor
         int bookEdition=request.getParameter('bookEdition').toLong()?:book.bookEdition
-        println(bookEdition)
         double bookPrice= request.getParameter('bookPrice').toDouble()?:book.bookPrice
         boolean bookAvailable= request.getParameter('bookAvailable')?:book.bookAvailable
 
@@ -171,8 +137,8 @@ class AdminController {
         }catch(Exception e) {
             result = [status: 'fail', message: 'Validation failed', errors: e.message]
         }
-
-        render(view: 'updateBook')    }
+        render(result as JSON)
+        redirect(controller:"admin", action: "showBooks")    }
 
 
     def delUser() {
@@ -244,6 +210,7 @@ class AdminController {
     private def checkAdminSession() {
         if (!session.user || session.user.role != 'admin') {
             redirect(controller: "login", action: "index")
+
             return false
         }
 

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://schemas.ericsson.com/vas/" targetNamespace="http://schemas.ericsson.com/vas/">
+
+    <wsdl:types>
+        <xs:schema targetNamespace="http://schemas.ericsson.com/vas/">
+            <xs:include schemaLocation="admin.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+
+    <wsdl:message name="addUserRequestMessage">
+        <wsdl:part name="addUserRequest" element="tns:addUserRequest"/>
+    </wsdl:message>
+    <wsdl:message name="addUserResponseMessage">
+        <wsdl:part name="addUserResponse" element="tns:addUserResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="adminPortType">
+        <wsdl:operation name="addUser">
+            <wsdl:input message="tns:addUserRequestMessage"  />
+            <wsdl:output message="tns:addUserResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="adminBinding" type="tns:adminPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="addUser">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="admin">
+        <wsdl:port name="adminPort" binding="tns:adminBinding">
+            <soap:address location="http://localhost:8080/AdminSoap"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

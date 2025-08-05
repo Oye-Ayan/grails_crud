@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="layout" content="main"/>
+%{--    <meta name="layout" content="main"/>--}%
     <title>Add Book</title>
     <style>
     body {
@@ -59,7 +59,7 @@
 
     input[type="submit"], .back-link {
         display: inline-block;
-        background-color: #1abc9c;
+        background-color: #0056b3;
         color: white;
         padding: 12px 30px;
         border: none;

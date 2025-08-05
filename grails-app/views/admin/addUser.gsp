@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="layout" content="main"/>
+%{--    <meta name="layout" content="main"/>--}%
     <title>Add User</title>
     <style>
     body {

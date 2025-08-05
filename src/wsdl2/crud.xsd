@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="changePasswordRequest">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="userId" type="xs:long"/>
+            <xs:element name="oldPassword" type="xs:string"/>
+            <xs:element name="newPassword" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+    <xs:element name="changePasswordResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="purchaseBookRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:long"/>
+                <xs:element name="bookId"type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="purchaseBookResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getBookByPopularityResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bookPopularitylist" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="bookName" type ="xs:string"/>
+                <xs:element name="purchaseCount" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    
+    <xs:element name="saveBookRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bookName" type="xs:string"/>
+                <xs:element name="bookAuthor" type="xs:string"/>
+                <xs:element name="bookEdition" type="xs:int"/>
+                <xs:element name="bookPrice" type="xs:double"/>
+                <xs:element name="bookAvailable" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="saveBookResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="updateBookRequest" >
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bookName" type="xs:string"/>
+                <xs:element name="bookAuthor" type="xs:string"/>
+                <xs:element name="bookEdition" type="xs:int"/>
+                <xs:element name="bookPrice" type="xs:double"/>
+                <xs:element name="bookAvailable" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateBookResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="delBookRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="book"
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    </xs:schema>
