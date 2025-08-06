@@ -90,6 +90,12 @@
         text-align: center;
     }
 
+    .radio-group {
+        display: flex; /* Arranges children in a row */
+        gap: 20px;     /* Adds space between the options */
+        align-items: center; /* Vertically aligns them */
+    }
+
     input[type="submit"] {
         background-color: #27ae60;
         color: white;
@@ -151,7 +157,17 @@
             <g:textField name="bookPrice"/>
 
             <label>Availability:</label>
-            <g:textField name="bookAvailable"/>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="bookAvailableTrue" name="bookAvailable" value="true">
+                    <label for="bookAvailableTrue">True</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="bookAvailableFalse" name="bookAvailable" value="false">
+                    <label for="bookAvailableFalse">False</label>
+                </div>
+            </div>
+
 
             <div class="submit-btn">
                 <input type="submit" value="Update Book"/>

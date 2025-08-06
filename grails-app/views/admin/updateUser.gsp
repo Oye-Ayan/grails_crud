@@ -118,6 +118,14 @@
         transition: background-color 0.3s ease;
     }
 
+    .radio-group {
+        display: flex; /* Arranges children (radio-options) in a row */
+        gap: 20px;     /* Adds space between the "True" and "False" options */
+        align-items: center; /* Vertically aligns the radio button and text */
+    }
+
+
+
     .back-link:hover {
         background-color: #2980b9;
     }
@@ -158,6 +166,18 @@
 
             <label>Role:</label>
             <g:textField name="role"/>
+
+            <label>Enabled:</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="enabledTrue" name="enabled" value="true">
+                    <label for="enabledTrue">True</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="enabledFalse" name="enabled" value="false">
+                    <label for="enabledFalse">False</label>
+                </div>
+            </div>
 
             <div class="submit-btn">
                 <input type="submit" value="Update User"/>

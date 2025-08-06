@@ -7,7 +7,7 @@ class User {
     String phone
     String title
     String password
-    Boolean enabled =true
+    Boolean enabled
     String role  // can be "admin" or "user"
     static hasMany = [purchasedBooks: Book]
 

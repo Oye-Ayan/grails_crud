@@ -6,7 +6,7 @@ class Book {
     String bookAuthor
     int bookEdition
     double bookPrice
-    boolean bookAvailable
+    Boolean bookAvailable
 
     static belongsTo = [User]
     static hasMany = [buyers: User]

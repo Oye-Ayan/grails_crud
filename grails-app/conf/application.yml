@@ -8,7 +8,7 @@ grails:
         host: smtp.gmail.com
         port: 587
         username: morning.star.please@gmail.com
-        password: ""
+        password: ecakpwnbqnjzfmtg
         props:
             mail.smtp.auth: true
             mail.smtp.starttls.enable: true
@@ -21,6 +21,7 @@ spring:
     groovy:
         template:
             check-template-location: false
+
 
 ---
 grails:
@@ -129,5 +130,11 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2
+    cxf:
+        endpoints:
+            adminSoapService:
+                implementor: crud.AdminSoapService
+                address: /AdminSoap
+
 server:
     context-path: /Crud

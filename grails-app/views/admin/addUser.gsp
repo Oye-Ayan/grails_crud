@@ -91,6 +91,12 @@
         font-weight: 500;
     }
 
+    .radio-group {
+        display: flex; /* Arranges children (radio-options) in a row */
+        gap: 20px;     /* Adds space between the "True" and "False" options */
+        align-items: center; /* Vertically aligns the radio button and text */
+    }
+
     .back-link:hover {
         color: #0056b3;
     }
@@ -132,6 +138,19 @@
                     <label>Role:</label>
                     <g:textField name="role"/>
                 </div>
+                    <div>
+                    <label>Enabled:</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="enabledTrue" name="enabled" value="true">
+                            <label for="enabledTrue">True</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="enabledFalse" name="enabled" value="false">
+                            <label for="enabledFalse">False</label>
+                        </div>
+                    </div>
+                    </div>
                 <div>
                     <label>Password:</label>
                     <g:passwordField name="password"/>

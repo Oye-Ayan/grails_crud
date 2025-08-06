@@ -33,12 +33,16 @@ class AdminController {
                 String title= request.getParameter('title')
                 String password=request.getParameter('password')
                 String role= request.getParameter('role')
+                boolean enabled=request.getParameter('enabled').toBoolean()
 //        User user=adminService.saveUser(firstName,lastName,email,phone,title,password,role)
-        if (adminService.saveUser(firstName,lastName,email,phone,title,password,role)) {
+        println(enabled)
+        if (adminService.saveUser(firstName,lastName,email,phone,title,password,role,enabled)) {
+
             result=[status: 'success', message: "User Added"]
 
         } else {
-            result = [status: 'fail', message: 'Validation failed']
+            result = [status: 'fail', message: 'Validation failed \n' +
+                    ' All fields are required']
 
         }
         render(result as JSON)
@@ -58,12 +62,12 @@ class AdminController {
         String bookAuthor= request.getParameter('bookAuthor')
         int bookEdition=request.getParameter('bookEdition').toInteger()
         double bookPrice= request.getParameter('bookPrice').toDouble()
-        boolean bookAvailable= request.getParameter('bookAvailable')
+        boolean bookAvailable= request.getParameter('bookAvailable').toBoolean()
 
         if (adminService.saveBook(bookName,bookAuthor,bookEdition,bookPrice,bookAvailable)) {
             result = [status: 'success', message: 'Book Added']
         } else {
-            result = [status: 'fail', message: 'Validation failed']
+            result = [status: 'fail', message: 'Validation failed \n All fields are required']
         }
         render(result as JSON)
         render(view: 'showBooks')
@@ -96,14 +100,15 @@ class AdminController {
         String title = request.getParameter("title") ?: user.title
         String password = request.getParameter("password") ?: user.password
         String role = request.getParameter("role") ?: user.role
+        Boolean enabled=request.getParameter('enabled')?:user.enabled
+        log.info("admin Enabled:$enabled")
 
-
-        if (adminService.updateUser(email, firstName, lastName, phone, title, password, role)) {
+        if (adminService.updateUser(email, firstName, lastName, phone, title, password, role, enabled)) {
             result = [status: 'success', message: 'User updated']
         } else {
             result = [status: 'fail', message: 'Validation failed', errors: user.errors.allErrors]
         }
-        render(result as JSON)
+//        render(result as JSON)
         redirect(controller:"admin", action:"showUsers")
     }
 
@@ -127,17 +132,18 @@ class AdminController {
             return
         }
         String bookAuthor= request.getParameter('bookAuthor')?:book.bookAuthor
-        int bookEdition=request.getParameter('bookEdition').toLong()?:book.bookEdition
-        double bookPrice= request.getParameter('bookPrice').toDouble()?:book.bookPrice
-        boolean bookAvailable= request.getParameter('bookAvailable')?:book.bookAvailable
-
+        int bookEdition=request.getParameter('bookEdition')?request.getParameter('bookEdition').toLong():book.bookEdition
+        double bookPrice= request.getParameter('bookPrice')?request.getParameter('bookPrice').toDouble():book.bookPrice
+        Boolean bookAvailable= request.getParameter('bookAvailable')?request.getParameter('bookAvailable').toBoolean():book.bookAvailable
+        println("admin Available status $bookAvailable")
         try {
             adminService.updateBook(bookName,bookAuthor,bookEdition,bookPrice,bookAvailable)
+
             result = [status: 'success', message: 'Book updated']
         }catch(Exception e) {
             result = [status: 'fail', message: 'Validation failed', errors: e.message]
         }
-        render(result as JSON)
+//        render(result as JSON)
         redirect(controller:"admin", action: "showBooks")    }
 
 

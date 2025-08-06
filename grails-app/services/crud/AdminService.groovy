@@ -16,6 +16,27 @@ class AdminService {
             body "Hi ${user.firstName},\n\nWelcome! Your account is ready.\n"
         }
     }
+
+
+    def sendDailyReminderToDisabledUsers() {
+        log.info("Running daily email job for disabled users at ${new Date()}")
+        println("EmailSchedulerService triggered at ${new Date()}")
+
+        List<User> disabledUsers = User.findAllByEnabled(false)
+        disabledUsers.each { user ->
+            try {
+                mailService.sendMail {
+                    to user.email
+                    subject "We're still waiting for you 😊"
+                    body "Hi ${user.firstName},\n\nIt looks like your account isn't enabled yet."
+                }
+                log.info("Email sent to ${user.email}")
+            } catch (Exception e) {
+                log.error("Failed to send email to ${user.email}: ${e.message}")
+            }
+        }
+    }
+
      def saveBook(
              String bookName,
              String bookAuthor,
@@ -109,10 +130,11 @@ class AdminService {
             String phone,
             String title,
             String password,
-            String role
+            String role,
+            boolean enabled
     ) {
         User user = new User(firstName: firstName, lastName: lastName, email: email,
-                phone: phone, title: title, password: password, role: role)
+                phone: phone, title: title, password: password, role: role, enabled: enabled)
 
         if (user.save(flush: true)) {
             sendWelcomeEmail(user)
@@ -134,7 +156,9 @@ class AdminService {
             String phone,
             String title,
             String password,
-            String role) {
+            String role,
+            boolean enabled
+    ) {
 
         if (!email) {
             result = [status: 'fail', message: 'Email is required to identify user']
@@ -153,6 +177,8 @@ class AdminService {
         user.title = title ?: user.title
         user.password = password ?: user.password
         user.role = role ?: user.role
+        user.enabled= enabled?: user.enabled
+        println(enabled)
 
         if (user.save(flush: true)) {
             return true
