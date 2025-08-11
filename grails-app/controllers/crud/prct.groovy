@@ -1,7 +1,7 @@
 import crud.User
 import grails.converters.JSON
 
-class prctc{
+class prct{
     def saveUser(String name,
                  Long phone,
                  String email,

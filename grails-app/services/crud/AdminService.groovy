@@ -79,26 +79,46 @@ class AdminService {
     }
 
 
-    def delBook(
-            String bookName
-    ){  Map result=[:]
-        if(!bookName){
-            result=[status: 'fail', message: 'Book not Found']
+//    def delBook(
+//            String bookName
+//    ){  Map result=[:]
+//        if(!bookName){
+//            result=[status: 'fail', message: 'Book not Found']
+//            return false
+//        }
+//        Book book = Book.findByBookName(bookName)
+//        if(!book){
+//            result=[status:'Fail', message: 'Book not found']
+//            return false
+//        }
+//        if (book.delete(flush: true)){
+//            return true
+//        }
+//        else{
+//            return false
+//        }
+//    }
+
+    def delBook(String bookName) {
+        if (!bookName) {
             return false
         }
+
         Book book = Book.findByBookName(bookName)
-        if(!book){
-            result=[status:'Fail', message: 'Book not found']
+        if (!book) {
             return false
         }
-        if (book.delete(flush: true)){
+        // Delete related purchases
+        Purchase.findAllByBook(book)*.delete(flush: true)
+
+        // Now delete the book
+        try {
+            book.delete(flush: true)
             return true
-        }
-        else{
+        } catch (Exception e) {
+            log.error("Error deleting book: ${e.message}")
             return false
         }
-
-
     }
 
     def showBooks(){
@@ -121,9 +141,7 @@ class AdminService {
     }
 
 
-
-
-    def saveUser(
+    def addUser(
             String firstName,
             String lastName,
             String email,
@@ -147,8 +165,6 @@ class AdminService {
         }
     }
 
-
-
     def updateUser(
             String email,
             String firstName,
@@ -161,13 +177,11 @@ class AdminService {
     ) {
 
         if (!email) {
-            result = [status: 'fail', message: 'Email is required to identify user']
             return false
         }
 
         User user = User.findByEmail(email)
         if (!user) {
-            result = [status: 'fail', message: 'User not found']
             return false
         }
 
@@ -178,24 +192,21 @@ class AdminService {
         user.password = password ?: user.password
         user.role = role ?: user.role
         user.enabled= enabled?: user.enabled
-        println(enabled)
-
+//        println(enabled)
         if (user.save(flush: true)) {
             return true
         } else {
-            result = [status: 'fail', message: 'Validation failed', errors: user.errors.allErrors]
             return false
         }
     }
 
     def delUser( String email){
         if(!email){
-            result=[status: 'Failed', message: 'Email Not Found']
             return false
         }
         User user= User.findByEmail(email)
         if(!user){
-            result=[status:'Failed', message: 'User not Found']
+            return false
         }
         if(user.delete(flush: true)){
             return true
@@ -204,8 +215,6 @@ class AdminService {
             return false
         }
     }
-
-
     def showUsers() {
         List<User> users = User.list()
         if (!users) {
@@ -229,15 +238,6 @@ class AdminService {
         ]
         return result
     }
-
-
-
-
-
-
-
-
-
 }
 
 

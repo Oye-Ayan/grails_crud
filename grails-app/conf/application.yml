@@ -22,6 +22,11 @@ spring:
         template:
             check-template-location: false
 
+endpoints:
+    enabled: false
+    jmx:
+        enabled: true
+
 
 ---
 grails:
@@ -130,11 +135,15 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2
-    cxf:
-        endpoints:
-            adminSoapService:
-                implementor: crud.AdminSoapService
-                address: /AdminSoap
+
+cxf:
+    path: '/services'
+    endpoints:
+        adminSoapService:   # This key is your bean name
+            address: '/admin'
+            wsdl: 'classpath:wsdl/admin.wsdl'   # optional
+
+
 
 server:
     context-path: /Crud

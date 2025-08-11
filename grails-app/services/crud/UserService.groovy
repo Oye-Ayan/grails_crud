@@ -32,12 +32,6 @@ class UserService {
         def purchase = new Purchase(user: user, book: book)
         purchase.save(flush: true)
 
-        // But only add to the user's purchasedBooks list once
-        if (!user.purchasedBooks.contains(book)) {
-            user.addToPurchasedBooks(book)
-            user.save(flush: true)
-        }
-
         return [status: 'Success', message: "Book '${book.bookName}' purchased successfully!"]
     }
 
@@ -48,14 +42,14 @@ class UserService {
 
     def getMyBooks(Long userId) {
         def user = User.get(userId)
-        return user?.purchasedBooks ?: []
+        if (!user) return []
+        return Purchase.findAllByUser(user)*.book
     }
 
 
 
-/////
+
 //////// FROM GPT
-//
 
     def getBooksSortedByPopularity() {
         def topBooksQuery = Purchase.createCriteria().list {
@@ -63,7 +57,7 @@ class UserService {
                 groupProperty("book")
                 count("id", 'purchaseCount')
             }
-            order("purchaseCount", "desc") // most purchased first
+            order("purchaseCount", "desc")
         }
 
         def topBooksList = topBooksQuery.collect { row ->

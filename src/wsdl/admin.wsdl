@@ -37,9 +37,10 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
+
     <wsdl:service name="admin">
         <wsdl:port name="adminPort" binding="tns:adminBinding">
-            <soap:address location="http://localhost:8080/AdminSoap"/>
+            <soap:address location="http://localhost:8080/Crud/services/adminsoap"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

@@ -3,7 +3,7 @@ package crud
 class AuthController {
 
     def index() {
-        render(view: 'login') // shows login.gsp
+        render(view: 'login')
     }
 
     def loginSubmit() {

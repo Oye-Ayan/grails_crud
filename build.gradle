@@ -65,11 +65,9 @@ dependencies {
     compile 'mysql:mysql-connector-java:8.0.15'
     compile "org.grails.plugins:mail:2.0.0"
     compile 'org.grails.plugins:cxf:3.1.1'
-//    compile 'org.grails.plugins:cxf:3.1.2'
     compile 'org.apache.cxf:cxf-rt-frontend-jaxws:3.4.5'
     compile 'org.apache.cxf:cxf-rt-frontend-simple:3.4.5'
-    
-
+    compile 'org.grails.plugins:quartz:2.0.9'
     runtime "org.grails.plugins:asset-pipeline"
 
     testCompile "org.grails:grails-plugin-testing"
@@ -82,10 +80,10 @@ dependencies {
 }
 
 
-springBoot {
-    mainClass = "crud.Application"
-
-}
+//springBoot {
+//    mainClass = "crud.Application"
+//
+//}
 task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }

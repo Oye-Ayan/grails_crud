@@ -5,11 +5,6 @@ import grails.converters.JSON
 class AdminController {
     AdminService adminService
 
-
-
-
-
-
     def index() {
         render(view: "index")
     }
@@ -23,7 +18,7 @@ class AdminController {
     def addUser() {
         Map result= [:]
         if (request.method == 'GET') {
-            render(view: 'addUser') // Show the form
+            render(view: 'addUser')
             return
         }
                 String firstName = request.getParameter('firstName')
@@ -34,9 +29,7 @@ class AdminController {
                 String password=request.getParameter('password')
                 String role= request.getParameter('role')
                 boolean enabled=request.getParameter('enabled').toBoolean()
-//        User user=adminService.saveUser(firstName,lastName,email,phone,title,password,role)
-        println(enabled)
-        if (adminService.saveUser(firstName,lastName,email,phone,title,password,role,enabled)) {
+        if (adminService.addUser(firstName,lastName,email,phone,title,password,role,enabled)) {
 
             result=[status: 'success', message: "User Added"]
 
@@ -67,9 +60,9 @@ class AdminController {
         if (adminService.saveBook(bookName,bookAuthor,bookEdition,bookPrice,bookAvailable)) {
             result = [status: 'success', message: 'Book Added']
         } else {
-            result = [status: 'fail', message: 'Validation failed \n All fields are required']
+            result = [status: 'fail', message: 'Validation failed ']
         }
-        render(result as JSON)
+//        render(result as JSON)
         render(view: 'showBooks')
     }
 
@@ -172,6 +165,8 @@ class AdminController {
         }
 
         render(result as JSON)
+        redirect(controller:"admin", action:"showUsers")
+
     }
 
 
