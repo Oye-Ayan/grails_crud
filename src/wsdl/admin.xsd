@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns="http://schemas.ericsson.com/vas/" attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns="http://schemas.ericsson.com/vas/"
+           targetNamespace="http://schemas.ericsson.com/vas/"
+           attributeFormDefault="unqualified"
+           elementFormDefault="qualified">
 
-           targetNamespace="http://schemas.ericsson.com/vas/">
-
-<xs:element name="addUserRequest">
+    <!-- ===== 1. Add User ===== -->
+    <xs:element name="addUserRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="firstName" type="xs:string"/>
@@ -18,13 +20,138 @@
         </xs:complexType>
     </xs:element>
 
-
     <xs:element name="addUserResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="status" type="xs:string"/>
-                <xs:element name="message" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+    <!-- ===== 2. Delete User ===== -->
+    <xs:element name="delUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="email" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="delUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ===== 3. Update User ===== -->
+    <xs:element name="updateUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="firstName" type="xs:string"/>
+                <xs:element name="lastName" type="xs:string"/>
+                <xs:element name="phone" type="xs:string"/>
+                <xs:element name="title" type="xs:string"/>
+                <xs:element name="password" type="xs:string"/>
+                <xs:element name="role" type="xs:string"/>
+                <xs:element name="enabled" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ===== 4. Save Book ===== -->
+    <xs:element name="saveBookRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bookName" type="xs:string"/>
+                <xs:element name="bookAuthor" type="xs:string"/>
+                <xs:element name="bookEdition" type="xs:int"/>
+                <xs:element name="bookPrice" type="xs:decimal"/>
+                <xs:element name="bookAvailable" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="saveBookResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ===== 5. Update Book ===== -->
+    <xs:element name="updateBookRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bookName" type="xs:string"/>
+                <xs:element name="bookAuthor" type="xs:string"/>
+                <xs:element name="bookEdition" type="xs:int"/>
+                <xs:element name="bookPrice" type="xs:decimal"/>
+                <xs:element name="bookAvailable" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateBookResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ===== 6. Delete Book ===== -->
+    <xs:element name="delBookRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bookName" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="delBookResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ===== 7. Show Books ===== -->
+    <xs:element name="showBooksRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="showBooksResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="books" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ===== 8. Show Users ===== -->
+    <xs:element name="showUsersRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="showUsersResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="users" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
 </xs:schema>

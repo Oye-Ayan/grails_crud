@@ -1,46 +1,168 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
-                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
-                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                  xmlns:tns="http://schemas.ericsson.com/vas/" targetNamespace="http://schemas.ericsson.com/vas/">
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://schemas.ericsson.com/vas/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://schemas.ericsson.com/vas/"
+             name="AdminService">
 
-    <wsdl:types>
-        <xs:schema targetNamespace="http://schemas.ericsson.com/vas/">
-            <xs:include schemaLocation="admin.xsd"/>
-        </xs:schema>
-    </wsdl:types>
+    <!-- ================= TYPES ================= -->
+    <types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                    targetNamespace="http://schemas.ericsson.com/vas/"
+                    elementFormDefault="qualified"
+                    attributeFormDefault="unqualified">
 
-    <wsdl:message name="addUserRequestMessage">
-        <wsdl:part name="addUserRequest" element="tns:addUserRequest"/>
-    </wsdl:message>
-    <wsdl:message name="addUserResponseMessage">
-        <wsdl:part name="addUserResponse" element="tns:addUserResponse"/>
-    </wsdl:message>
+            <!-- ===== Include your XSD here ===== -->
+            <!-- For brevity, importing the XSD instead of inlining -->
+            <xsd:import namespace="http://schemas.ericsson.com/vas/"
+                        schemaLocation="admin.xsd"/>
+        </xsd:schema>
+    </types>
 
-    <wsdl:portType name="adminPortType">
-        <wsdl:operation name="addUser">
-            <wsdl:input message="tns:addUserRequestMessage"  />
-            <wsdl:output message="tns:addUserResponseMessage"/>
-        </wsdl:operation>
-    </wsdl:portType>
+    <!-- ================= MESSAGES ================= -->
+    <message name="AddUserRequest">
+        <part name="parameters" element="tns:addUserRequest"/>
+    </message>
+    <message name="AddUserResponse">
+        <part name="parameters" element="tns:addUserResponse"/>
+    </message>
 
-    <wsdl:binding name="adminBinding" type="tns:adminPortType">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="addUser">
-            <wsdl:input>
-                <soap:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal"/>
-            </wsdl:output>
-        </wsdl:operation>
-    </wsdl:binding>
+    <message name="DelUserRequest">
+        <part name="parameters" element="tns:delUserRequest"/>
+    </message>
+    <message name="DelUserResponse">
+        <part name="parameters" element="tns:delUserResponse"/>
+    </message>
 
-    <wsdl:service name="admin">
-        <wsdl:port name="adminPort" binding="tns:adminBinding">
-            <soap:address location="http://localhost:8080/Crud/services/adminsoap"/>
-        </wsdl:port>
-    </wsdl:service>
-</wsdl:definitions>
+    <message name="UpdateUserRequest">
+        <part name="parameters" element="tns:updateUserRequest"/>
+    </message>
+    <message name="UpdateUserResponse">
+        <part name="parameters" element="tns:updateUserResponse"/>
+    </message>
+
+    <message name="SaveBookRequest">
+        <part name="parameters" element="tns:saveBookRequest"/>
+    </message>
+    <message name="SaveBookResponse">
+        <part name="parameters" element="tns:saveBookResponse"/>
+    </message>
+
+    <message name="UpdateBookRequest">
+        <part name="parameters" element="tns:updateBookRequest"/>
+    </message>
+    <message name="UpdateBookResponse">
+        <part name="parameters" element="tns:updateBookResponse"/>
+    </message>
+
+    <message name="DelBookRequest">
+        <part name="parameters" element="tns:delBookRequest"/>
+    </message>
+    <message name="DelBookResponse">
+        <part name="parameters" element="tns:delBookResponse"/>
+    </message>
+
+    <message name="ShowBooksRequest">
+        <part name="parameters" element="tns:showBooksRequest"/>
+    </message>
+    <message name="ShowBooksResponse">
+        <part name="parameters" element="tns:showBooksResponse"/>
+    </message>
+
+    <message name="ShowUsersRequest">
+        <part name="parameters" element="tns:showUsersRequest"/>
+    </message>
+    <message name="ShowUsersResponse">
+        <part name="parameters" element="tns:showUsersResponse"/>
+    </message>
+
+    <!-- ================= PORT TYPE ================= -->
+    <portType name="AdminPortType">
+        <operation name="addUser">
+            <input message="tns:AddUserRequest"/>
+            <output message="tns:AddUserResponse"/>
+        </operation>
+        <operation name="delUser">
+            <input message="tns:DelUserRequest"/>
+            <output message="tns:DelUserResponse"/>
+        </operation>
+        <operation name="updateUser">
+            <input message="tns:UpdateUserRequest"/>
+            <output message="tns:UpdateUserResponse"/>
+        </operation>
+        <operation name="saveBook">
+            <input message="tns:SaveBookRequest"/>
+            <output message="tns:SaveBookResponse"/>
+        </operation>
+        <operation name="updateBook">
+            <input message="tns:UpdateBookRequest"/>
+            <output message="tns:UpdateBookResponse"/>
+        </operation>
+        <operation name="delBook">
+            <input message="tns:DelBookRequest"/>
+            <output message="tns:DelBookResponse"/>
+        </operation>
+        <operation name="showBooks">
+            <input message="tns:ShowBooksRequest"/>
+            <output message="tns:ShowBooksResponse"/>
+        </operation>
+        <operation name="showUsers">
+            <input message="tns:ShowUsersRequest"/>
+            <output message="tns:ShowUsersResponse"/>
+        </operation>
+    </portType>
+
+    <!-- ================= BINDING ================= -->
+    <binding name="AdminSoapBinding" type="tns:AdminPortType">
+        <soap:binding style="document"
+                      transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="addUser">
+            <soap:operation soapAction="addUser"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+        <operation name="delUser">
+            <soap:operation soapAction="delUser"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+        <operation name="updateUser">
+            <soap:operation soapAction="updateUser"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+        <operation name="saveBook">
+            <soap:operation soapAction="saveBook"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+        <operation name="updateBook">
+            <soap:operation soapAction="updateBook"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+        <operation name="delBook">
+            <soap:operation soapAction="delBook"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+        <operation name="showBooks">
+            <soap:operation soapAction="showBooks"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+        <operation name="showUsers">
+            <soap:operation soapAction="showUsers"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+    </binding>
+
+    <!-- ================= SERVICE ================= -->
+    <service name="AdminService">
+        <port name="AdminPort" binding="tns:AdminSoapBinding">
+            <soap:address location="http://localhost:8080/yourApp/adminService"/>
+        </port>
+    </service>
+</definitions>

@@ -1,10 +1,8 @@
 package crud
-import com.ericsson.schemas.vas.AddUserRequest
-import com.ericsson.schemas.vas.AddUserResponse
-import com.ericsson.schemas.vas.AdminPortType
+
+import com.ericsson.schemas.vas.*
 import org.grails.cxf.utils.GrailsCxfEndpoint
 import grails.transaction.Transactional
-
 
 @Transactional
 @GrailsCxfEndpoint()
@@ -12,6 +10,7 @@ class AdminSoapService implements AdminPortType {
 
     AdminService adminService
 
+    @Override
     AddUserResponse addUser(AddUserRequest addUserRequest) {
         AddUserResponse response = new AddUserResponse()
 
@@ -23,14 +22,94 @@ class AdminSoapService implements AdminPortType {
                 addUserRequest.title,
                 addUserRequest.password,
                 addUserRequest.role,
-                false // set enabled default to true
+                false
         )
 
-        if (success) {
-            response.status = "User Saved Successfully"
-        } else {
-            response.status = "User Save Failed"
-        }
+        response.status = success ? "User Saved Successfully" : "User Save Failed"
+        return response
+    }
+
+    @Override
+    DelUserResponse delUser(DelUserRequest request) {
+        DelUserResponse response = new DelUserResponse()
+        println("Printting $request")
+        println("Printting email $request.email")
+        boolean success = adminService.delUser(request.email)
+            println("succes is $success")
+            if(success){
+                response.status="User deleted"
+            } else{
+                response.status="failed to delete user"
+            }
+        return response
+    }
+
+    @Override
+    DelBookResponse delBook(DelBookRequest request) {
+        DelBookResponse response = new DelBookResponse()
+        boolean success = adminService.delBook(request.bookName)
+        response.status = success ? "Book Deleted Successfully" : "Book Not Found"
+        return response
+    }
+
+    @Override
+    UpdateUserResponse updateUser(UpdateUserRequest request) {
+        UpdateUserResponse response = new UpdateUserResponse()
+        boolean success = adminService.updateUser(
+                request.email,
+                request.firstName,
+                request.lastName,
+                request.phone,
+                request.title,
+                request.password,
+                request.role,
+                request.enabled
+        )
+        response.status = success ? "User Updated Successfully" : "User Update Failed"
+        return response
+    }
+
+    @Override
+    UpdateBookResponse updateBook(UpdateBookRequest request) {
+        UpdateBookResponse response = new UpdateBookResponse()
+        boolean success = adminService.updateBook(
+                request.bookName,
+                request.bookAuthor,
+                request.bookEdition,
+                request.bookPrice,
+                request.bookAvailable
+        )
+        response.status = success ? "Book Updated Successfully" : "Book Update Failed"
+        return response
+    }
+
+    @Override
+    ShowBooksResponse showBooks(ShowBooksRequest request) {
+        ShowBooksResponse response = new ShowBooksResponse()
+        List<String> books = adminService.showBooks()
+        response.books = books ?: []
+        return response
+    }
+
+    @Override
+    ShowUsersResponse showUsers(ShowUsersRequest request) {
+        ShowUsersResponse response = new ShowUsersResponse()
+        List<String> users = adminService.showUsers()
+        response.users = users ?: []
+        return response
+    }
+
+    @Override
+    SaveBookResponse saveBook(SaveBookRequest request) {
+        SaveBookResponse response = new SaveBookResponse()
+        boolean success = adminService.saveBook(
+                request.bookName,
+                request.bookAuthor,
+                request.bookEdition,
+                request.bookPrice,
+                request.bookAvailable
+        )
+        response.status = success ? "Book Saved Successfully" : "Book Save Failed"
         return response
     }
 }

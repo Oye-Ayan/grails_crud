@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  * Generated source version: 2.2
  * 
  */
-@WebService(name = "adminPortType", targetNamespace = "http://schemas.ericsson.com/vas/")
+@WebService(name = "AdminPortType", targetNamespace = "http://schemas.ericsson.com/vas/")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
     ObjectFactory.class
@@ -25,14 +25,98 @@ public interface AdminPortType {
 
     /**
      * 
-     * @param addUserRequest
+     * @param parameters
      * @return
      *     returns com.ericsson.schemas.vas.AddUserResponse
      */
-    @WebMethod
-    @WebResult(name = "addUserResponse", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "addUserResponse")
+    @WebMethod(action = "addUser")
+    @WebResult(name = "addUserResponse", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
     public AddUserResponse addUser(
-        @WebParam(name = "addUserRequest", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "addUserRequest")
-        AddUserRequest addUserRequest);
+        @WebParam(name = "addUserRequest", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+        AddUserRequest parameters);
+
+    /**
+     * 
+     * @param parameters
+     * @return
+     *     returns com.ericsson.schemas.vas.DelUserResponse
+     */
+    @WebMethod(action = "delUser")
+    @WebResult(name = "delUserResponse", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+    public DelUserResponse delUser(
+        @WebParam(name = "delUserRequest", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+        DelUserRequest parameters);
+
+    /**
+     * 
+     * @param parameters
+     * @return
+     *     returns com.ericsson.schemas.vas.UpdateUserResponse
+     */
+    @WebMethod(action = "updateUser")
+    @WebResult(name = "updateUserResponse", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+    public UpdateUserResponse updateUser(
+        @WebParam(name = "updateUserRequest", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+        UpdateUserRequest parameters);
+
+    /**
+     * 
+     * @param parameters
+     * @return
+     *     returns com.ericsson.schemas.vas.SaveBookResponse
+     */
+    @WebMethod(action = "saveBook")
+    @WebResult(name = "saveBookResponse", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+    public SaveBookResponse saveBook(
+        @WebParam(name = "saveBookRequest", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+        SaveBookRequest parameters);
+
+    /**
+     * 
+     * @param parameters
+     * @return
+     *     returns com.ericsson.schemas.vas.UpdateBookResponse
+     */
+    @WebMethod(action = "updateBook")
+    @WebResult(name = "updateBookResponse", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+    public UpdateBookResponse updateBook(
+        @WebParam(name = "updateBookRequest", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+        UpdateBookRequest parameters);
+
+    /**
+     * 
+     * @param parameters
+     * @return
+     *     returns com.ericsson.schemas.vas.DelBookResponse
+     */
+    @WebMethod(action = "delBook")
+    @WebResult(name = "delBookResponse", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+    public DelBookResponse delBook(
+        @WebParam(name = "delBookRequest", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+        DelBookRequest parameters);
+
+    /**
+     * 
+     * @param parameters
+     * @return
+     *     returns com.ericsson.schemas.vas.ShowBooksResponse
+     */
+    @WebMethod(action = "showBooks")
+    @WebResult(name = "showBooksResponse", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+    public ShowBooksResponse showBooks(
+        @WebParam(name = "showBooksRequest", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+        ShowBooksRequest parameters);
+
+    /**
+     * 
+     * @param parameters
+     * @return
+     *     returns com.ericsson.schemas.vas.ShowUsersResponse
+     */
+    @WebMethod(action = "showUsers")
+    @WebResult(name = "showUsersResponse", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+    public ShowUsersResponse showUsers(
+        @WebParam(name = "showUsersRequest", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+        ShowUsersRequest parameters);
 
 }

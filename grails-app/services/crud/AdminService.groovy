@@ -201,15 +201,19 @@ class AdminService {
     }
 
     def delUser( String email){
+        Map result=[:]
         if(!email){
             return false
         }
         User user= User.findByEmail(email)
         if(!user){
-            return false
+            result = [status: 'failed', message: 'User not Found']
+            return result
         }
+        println("printing user $user")
         if(user.delete(flush: true)){
-            return true
+            result = [status: 'success', message: 'User deleted']
+            return result
         }
         else{
             return false
