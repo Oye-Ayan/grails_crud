@@ -1,14 +1,10 @@
 package crud
-
 import grails.transaction.Transactional
-
 
 @Transactional
 class AdminService {
 
-
     def mailService
-
     def sendWelcomeEmail(User user) {
         mailService.sendMail {
             to user.email
@@ -16,7 +12,6 @@ class AdminService {
             body "Hi ${user.firstName},\n\nWelcome! Your account is ready.\n"
         }
     }
-
 
     def sendDailyReminderToDisabledUsers() {
         log.info("Running daily email job for disabled users at ${new Date()}")
@@ -45,7 +40,6 @@ class AdminService {
              boolean bookAvailable){
 
          Book book = new Book(bookName: bookName, bookAuthor: bookAuthor, bookEdition: bookEdition, bookPrice: bookPrice, bookAvailable: bookAvailable )
-
          try {
              book.save(flush: true)
              return true
@@ -53,7 +47,6 @@ class AdminService {
              log.error("Failed to Add Book: ${e.message}")
              return false
          }
-
      }
 
     def updateBook(
@@ -87,14 +80,12 @@ class AdminService {
         if (!bookName) {
             return false
         }
-
         Book book = Book.findByBookName(bookName)
         if (!book) {
             return false
         }
         // Delete related purchases
         Purchase.findAllByBook(book)*.delete(flush: true)
-
         try {
             book.delete(flush: true)
             return true
@@ -103,7 +94,6 @@ class AdminService {
             return false
         }
     }
-
     def showBooks(){
         List<Book> books= Book.list()
         Map result =[
@@ -122,8 +112,6 @@ class AdminService {
         ]
         return result
     }
-
-
     def addUser(
             String firstName,
             String lastName,
@@ -185,7 +173,6 @@ class AdminService {
     }
 
     def delUser( String email){
-        Map result=[:]
         if(!email){
             return false
         }

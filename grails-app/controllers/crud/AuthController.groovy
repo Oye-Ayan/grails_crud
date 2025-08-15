@@ -9,7 +9,6 @@ class AuthController {
     def loginSubmit() {
         def email = request.getParameter('email')
         def password = request.getParameter('password')
-
         def user = User.findByEmailAndPassword(email, password)
 
         if (!user) {
@@ -17,7 +16,6 @@ class AuthController {
             redirect(action: "index")
             return
         }
-
         session.user = user
 
         // Redirect based on role

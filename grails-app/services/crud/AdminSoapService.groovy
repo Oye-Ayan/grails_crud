@@ -1,5 +1,4 @@
 package crud
-
 import com.ericsson.schemas.vas.*
 import org.grails.cxf.utils.GrailsCxfEndpoint
 import grails.transaction.Transactional
@@ -139,14 +138,11 @@ class AdminSoapService implements AdminPortType {
         response.phone     = user.phone
         response.title     = user.title
         response.enabled   = user.enabled
-
         // Get user's purchased books
         List books = userService.getMyBooks(user.id) ?: []
         books.each { book ->
             response.purchasedBook.add(book.bookName ?: "")
         }
-
         return response
     }
-
 }

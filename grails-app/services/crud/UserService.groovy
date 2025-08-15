@@ -1,5 +1,4 @@
 package crud
-
 import grails.transaction.Transactional
 
 @Transactional
@@ -23,11 +22,9 @@ class UserService {
     def purchaseBook(Long userId, Long bookId) {
         def user = User.get(userId)
         def book = Book.get(bookId)
-
         if (!user || !book) {
             return [status: 'Error', message: 'User or book not found']
         }
-
         // Always record purchase (even if already purchased)
         def purchase = new Purchase(user: user, book: book)
         purchase.save(flush: true)
@@ -39,17 +36,13 @@ class UserService {
         return Purchase.findAllByUser(User.get(userId))
     }
 
-
     def getMyBooks(Long userId) {
         def user = User.get(userId)
         if (!user) return []
         return Purchase.findAllByUser(user)*.book
     }
 
-
-
-
-//////// FROM GPT
+////////
 
     def getBooksSortedByPopularity() {
         def topBooksQuery = Purchase.createCriteria().list {
@@ -59,15 +52,11 @@ class UserService {
             }
             order("purchaseCount", "desc")
         }
-
         def topBooksList = topBooksQuery.collect { row ->
             def book = row[0]
             def count = row[1]
             return [book: book, count: count]
         }
-
         return topBooksList
     }
-
-
 }
