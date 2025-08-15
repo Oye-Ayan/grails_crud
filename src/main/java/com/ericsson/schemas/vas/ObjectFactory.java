@@ -70,6 +70,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetUserPurchasesResponse }
+     * 
+     */
+    public GetUserPurchasesResponse createGetUserPurchasesResponse() {
+        return new GetUserPurchasesResponse();
+    }
+
+    /**
      * Create an instance of {@link AddUserRequest }
      * 
      */
@@ -91,6 +99,14 @@ public class ObjectFactory {
      */
     public ShowUsersResponse createShowUsersResponse() {
         return new ShowUsersResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetUserPurchasesRequest }
+     * 
+     */
+    public GetUserPurchasesRequest createGetUserPurchasesRequest() {
+        return new GetUserPurchasesRequest();
     }
 
     /**

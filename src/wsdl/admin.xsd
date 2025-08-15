@@ -16,6 +16,7 @@
                 <xs:element name="title" type="xs:string"/>
                 <xs:element name="password" type="xs:string"/>
                 <xs:element name="role" type="xs:string"/>
+                <xs:element name="enabled" type="xs:boolean"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -111,7 +112,6 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- ===== 6. Delete Book ===== -->
     <xs:element name="delBookRequest">
         <xs:complexType>
             <xs:sequence>
@@ -128,7 +128,6 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- ===== 7. Show Books ===== -->
     <xs:element name="showBooksRequest">
         <xs:complexType/>
     </xs:element>
@@ -141,7 +140,6 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- ===== 8. Show Users ===== -->
     <xs:element name="showUsersRequest">
         <xs:complexType/>
     </xs:element>
@@ -153,5 +151,31 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+    <xs:element name="getUserPurchasesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="email" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getUserPurchasesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+                <xs:element name="userId" type="xs:long" minOccurs="0"/>
+                <xs:element name="firstName" type="xs:string" minOccurs="0"/>
+                <xs:element name="lastName" type="xs:string" minOccurs="0"/>
+                <xs:element name="email" type="xs:string" minOccurs="0"/>
+                <xs:element name="phone" type="xs:string" minOccurs="0"/>
+                <xs:element name="title" type="xs:string" minOccurs="0"/>
+                <xs:element name="enabled" type="xs:boolean" minOccurs="0"/>
+                <!-- purchasedBook contains bookName only to keep things simple -->
+                <xs:element name="purchasedBook" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
 
 </xs:schema>

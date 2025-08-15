@@ -9,6 +9,7 @@ import grails.transaction.Transactional
 class AdminSoapService implements AdminPortType {
 
     AdminService adminService
+    UserService userService
 
     @Override
     AddUserResponse addUser(AddUserRequest addUserRequest) {
@@ -112,4 +113,40 @@ class AdminSoapService implements AdminPortType {
         response.status = success ? "Book Saved Successfully" : "Book Save Failed"
         return response
     }
+
+    @Override
+    GetUserPurchasesResponse getUserPurchases(GetUserPurchasesRequest request) {
+        GetUserPurchasesResponse response = new GetUserPurchasesResponse()
+
+        if (!request?.email) {
+            response.status = "Error: Email is required"
+            return response
+        }
+
+        String emailNorm = request.email.trim().toLowerCase()
+        def user = User.find("from User where lower(email) = :e", [e: emailNorm])
+
+        if (!user) {
+            response.status = "User Not Found"
+            return response
+        }
+
+        response.status = "Success"
+        response.userId = user.id
+        response.firstName = user.firstName
+        response.lastName  = user.lastName
+        response.email     = user.email
+        response.phone     = user.phone
+        response.title     = user.title
+        response.enabled   = user.enabled
+
+        // Get user's purchased books
+        List books = userService.getMyBooks(user.id) ?: []
+        books.each { book ->
+            response.purchasedBook.add(book.bookName ?: "")
+        }
+
+        return response
+    }
+
 }

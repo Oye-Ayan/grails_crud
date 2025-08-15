@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="role" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="enabled" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -41,7 +42,8 @@ import javax.xml.bind.annotation.XmlType;
     "phone",
     "title",
     "password",
-    "role"
+    "role",
+    "enabled"
 })
 @XmlRootElement(name = "addUserRequest")
 public class AddUserRequest {
@@ -60,6 +62,7 @@ public class AddUserRequest {
     protected String password;
     @XmlElement(required = true)
     protected String role;
+    protected boolean enabled;
 
     /**
      * Gets the value of the firstName property.
@@ -227,6 +230,22 @@ public class AddUserRequest {
      */
     public void setRole(String value) {
         this.role = value;
+    }
+
+    /**
+     * Gets the value of the enabled property.
+     * 
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * Sets the value of the enabled property.
+     * 
+     */
+    public void setEnabled(boolean value) {
+        this.enabled = value;
     }
 
 }

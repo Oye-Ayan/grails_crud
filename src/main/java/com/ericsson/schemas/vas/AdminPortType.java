@@ -119,4 +119,16 @@ public interface AdminPortType {
         @WebParam(name = "showUsersRequest", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
         ShowUsersRequest parameters);
 
+    /**
+     * 
+     * @param parameters
+     * @return
+     *     returns com.ericsson.schemas.vas.GetUserPurchasesResponse
+     */
+    @WebMethod(action = "getUserPurchases")
+    @WebResult(name = "getUserPurchasesResponse", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+    public GetUserPurchasesResponse getUserPurchases(
+        @WebParam(name = "getUserPurchasesRequest", targetNamespace = "http://schemas.ericsson.com/vas/", partName = "parameters")
+        GetUserPurchasesRequest parameters);
+
 }

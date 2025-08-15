@@ -46,9 +46,12 @@ class AdminService {
 
          Book book = new Book(bookName: bookName, bookAuthor: bookAuthor, bookEdition: bookEdition, bookPrice: bookPrice, bookAvailable: bookAvailable )
 
-         if (book.save(flush: true)) {
-            return true
-         } else {
+         try {
+             book.save(flush: true)
+             return true
+         } catch (Exception e) {
+             log.error("Failed to Add Book: ${e.message}")
+             return false
          }
 
      }
@@ -71,33 +74,14 @@ class AdminService {
         book.bookEdition= bookEdition?: book.bookEdition
         book.bookPrice=bookPrice?: book.bookPrice
         book.bookAvailable=bookAvailable?: book.bookAvailable
-        if(book.save(flush:true)){
+        try {
+            book.save(flush: true)
             return true
-        }
-        else
+        } catch (Exception e) {
+            log.error("Failed to Update Book: ${e.message}")
             return false
+        }
     }
-
-
-//    def delBook(
-//            String bookName
-//    ){  Map result=[:]
-//        if(!bookName){
-//            result=[status: 'fail', message: 'Book not Found']
-//            return false
-//        }
-//        Book book = Book.findByBookName(bookName)
-//        if(!book){
-//            result=[status:'Fail', message: 'Book not found']
-//            return false
-//        }
-//        if (book.delete(flush: true)){
-//            return true
-//        }
-//        else{
-//            return false
-//        }
-//    }
 
     def delBook(String bookName) {
         if (!bookName) {
@@ -111,7 +95,6 @@ class AdminService {
         // Delete related purchases
         Purchase.findAllByBook(book)*.delete(flush: true)
 
-        // Now delete the book
         try {
             book.delete(flush: true)
             return true
@@ -153,15 +136,14 @@ class AdminService {
     ) {
         User user = new User(firstName: firstName, lastName: lastName, email: email,
                 phone: phone, title: title, password: password, role: role, enabled: enabled)
-
-        if (user.save(flush: true)) {
+        try {
+            user.save(flush: true)
             sendWelcomeEmail(user)
+
             return true
-        } else {
-            user.errors.allErrors.each {
-                println it.defaultMessage
-            }
-            return null
+        } catch (Exception e) {
+            log.error("Failed to Add User: ${e.message}")
+            return false
         }
     }
 
@@ -193,9 +175,11 @@ class AdminService {
         user.role = role ?: user.role
         user.enabled= enabled?: user.enabled
 //        println(enabled)
-        if (user.save(flush: true)) {
+        try {
+            user.save(flush: true)
             return true
-        } else {
+        } catch (Exception e) {
+            log.error("Failed to Update User: ${e.message}")
             return false
         }
     }
@@ -210,12 +194,11 @@ class AdminService {
             result = [status: 'failed', message: 'User not Found']
             return result
         }
-        println("printing user $user")
-        if(user.delete(flush: true)){
-            result = [status: 'success', message: 'User deleted']
-            return result
-        }
-        else{
+        try {
+            user.delete(flush: true)
+            return true
+        } catch (Exception e) {
+            log.error("Error deleting user: ${e.message}")
             return false
         }
     }

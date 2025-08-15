@@ -77,6 +77,14 @@
         <part name="parameters" element="tns:showUsersResponse"/>
     </message>
 
+    <message name="GetUserPurchasesRequest">
+        <part name="parameters" element="tns:getUserPurchasesRequest"/>
+    </message>
+    <message name="GetUserPurchasesResponse">
+        <part name="parameters" element="tns:getUserPurchasesResponse"/>
+    </message>
+
+
     <!-- ================= PORT TYPE ================= -->
     <portType name="AdminPortType">
         <operation name="addUser">
@@ -111,6 +119,11 @@
             <input message="tns:ShowUsersRequest"/>
             <output message="tns:ShowUsersResponse"/>
         </operation>
+        <operation name="getUserPurchases">
+            <input message="tns:GetUserPurchasesRequest"/>
+            <output message="tns:GetUserPurchasesResponse"/>
+        </operation>
+
     </portType>
 
     <!-- ================= BINDING ================= -->
@@ -154,6 +167,11 @@
         </operation>
         <operation name="showUsers">
             <soap:operation soapAction="showUsers"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+        <operation name="getUserPurchases">
+            <soap:operation soapAction="getUserPurchases"/>
             <input><soap:body use="literal"/></input>
             <output><soap:body use="literal"/></output>
         </operation>

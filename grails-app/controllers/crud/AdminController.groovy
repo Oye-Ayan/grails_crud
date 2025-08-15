@@ -59,11 +59,13 @@ class AdminController {
 
         if (adminService.saveBook(bookName,bookAuthor,bookEdition,bookPrice,bookAvailable)) {
             result = [status: 'success', message: 'Book Added']
+            return result
         } else {
-            result = [status: 'fail', message: 'Validation failed ']
+            result = [status: 'fail', message: 'Failed to add a book']
+            return result
         }
-//        render(result as JSON)
-        render(view: 'showBooks')
+        render(result as JSON)
+//        render(view: 'showBooks')
     }
 
 
@@ -98,8 +100,10 @@ class AdminController {
 
         if (adminService.updateUser(email, firstName, lastName, phone, title, password, role, enabled)) {
             result = [status: 'success', message: 'User updated']
+            return result
         } else {
             result = [status: 'fail', message: 'Validation failed', errors: user.errors.allErrors]
+            return result
         }
 //        render(result as JSON)
         redirect(controller:"admin", action:"showUsers")
@@ -133,11 +137,14 @@ class AdminController {
             adminService.updateBook(bookName,bookAuthor,bookEdition,bookPrice,bookAvailable)
 
             result = [status: 'success', message: 'Book updated']
+            return result
         }catch(Exception e) {
             result = [status: 'fail', message: 'Validation failed', errors: e.message]
+            return result
         }
 //        render(result as JSON)
-        redirect(controller:"admin", action: "showBooks")    }
+        redirect(controller:"admin", action: "showBooks")
+    }
 
 
     def delUser() {
