@@ -122,6 +122,10 @@ class AdminService {
             String role,
             boolean enabled
     ) {
+        def existingUser = User.findByEmail(email)
+        if (existingUser) {
+            return [status: "Error", message: "User already exists with this email"]
+        }
         User user = new User(firstName: firstName, lastName: lastName, email: email,
                 phone: phone, title: title, password: password, role: role, enabled: enabled)
         try {
