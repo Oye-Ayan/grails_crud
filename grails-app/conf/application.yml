@@ -110,11 +110,11 @@ environments:
     test:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://localhost/gw_mobilink?useUnicode=true&characterEncoding=UTF-8
+            url: jdbc:mysql://localhost/bookstoredb?useUnicode=true&characterEncoding=UTF-8
     production:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://localhost/gw_mobilink?useUnicode=true&characterEncoding=UTF-8
+            url: jdbc:mysql://localhost/bookstoredb?useUnicode=true&characterEncoding=UTF-8
             username: dev012
             password: devO!2#Ec0N
             properties:

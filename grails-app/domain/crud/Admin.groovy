@@ -13,4 +13,6 @@ class Admin {
         static constraints = {
                 email email: true, unique: true
         }
+
+
     }

@@ -79,7 +79,6 @@ dependencies {
     console "org.grails:grails-console"
 }
 
-
 //springBoot {
 //    mainClass = "crud.Application"
 //

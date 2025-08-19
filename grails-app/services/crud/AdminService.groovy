@@ -13,11 +13,49 @@ class AdminService {
         }
     }
 
-    def sendDailyReminderToDisabledUsers() {
-        log.info("Running daily email job for disabled users at ${new Date()}")
-        println("EmailSchedulerService triggered at ${new Date()}")
+//    def sendDailyReminderToDisabledUsers() {
+//        log.info("Running daily email job for disabled users at ${new Date()}")
+//        println("EmailSchedulerService triggered at ${new Date()}")
+//
+//        List<User> disabledUsers = User.findAllByEnabled(false)
+//        disabledUsers.each { user ->
+//            try {
+//                mailService.sendMail {
+//                    to user.email
+//                    subject "We're still waiting for you 😊"
+//                    body "Hi ${user.firstName},\n\nIt looks like your account isn't enabled yet."
+//                }
+//                log.info("Email sent to ${user.email}")
+//            } catch (Exception e) {
+//                log.error("Failed to send email to ${user.email}: ${e.message}")
+//            }
+//        }
+//    }
 
-        List<User> disabledUsers = User.findAllByEnabled(false)
+    // Track offset per day
+    private static int offset = 0
+    private static Date lastResetDate = null
+
+    def sendDailyReminderToDisabledUsers() {
+        Date now = new Date()
+
+        // Reset offset at 9:30 AM each day
+        if (!lastResetDate || lastResetDate.clearTime() != now.clearTime()) {
+            offset = 0
+            lastResetDate = now
+            log.info("Resetting email offset for new day: ${now}")
+        }
+
+        log.info("Running daily email job at ${now}, starting offset: ${offset}")
+
+        // Fetch next 5 disabled users
+        List<User> disabledUsers = User.findAllByEnabled(false, [max: 5, offset: offset])
+
+        if (!disabledUsers) {
+            log.info("No more disabled users left to email today.")
+            return
+        }
+
         disabledUsers.each { user ->
             try {
                 mailService.sendMail {
@@ -30,8 +68,13 @@ class AdminService {
                 log.error("Failed to send email to ${user.email}: ${e.message}")
             }
         }
+
+        // Move offset for next run
+        offset += disabledUsers.size()
+        log.info("Updated offset to ${offset}")
     }
 
+    //
      def saveBook(
              String bookName,
              String bookAuthor,
