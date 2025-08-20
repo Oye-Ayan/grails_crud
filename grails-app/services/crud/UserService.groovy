@@ -44,19 +44,24 @@ class UserService {
 
 ////////
 
+//    def getBooksSortedByPopularity() {
+//        def topBooksQuery = Purchase.createCriteria().list {
+//            projections {
+//                groupProperty("book")
+//                count("id", 'purchaseCount')
+//            }
+//            order("purchaseCount", "desc")
+//        }
+//        def topBooksList = topBooksQuery.collect { row ->
+//            def book = row[0]
+//            def count = row[1]
+//            return [book: book, count: count]
+//        }
+//        return topBooksList
+//    }
+
     def getBooksSortedByPopularity() {
-        def topBooksQuery = Purchase.createCriteria().list {
-            projections {
-                groupProperty("book")
-                count("id", 'purchaseCount')
-            }
-            order("purchaseCount", "desc")
-        }
-        def topBooksList = topBooksQuery.collect { row ->
-            def book = row[0]
-            def count = row[1]
-            return [book: book, count: count]
-        }
-        return topBooksList
+        return Purchase.getBooksSortedByPopularity()  //domain
     }
+
 }

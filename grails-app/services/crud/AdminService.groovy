@@ -12,26 +12,6 @@ class AdminService {
             body "Hi ${user.firstName},\n\nWelcome! Your account is ready.\n"
         }
     }
-
-//    def sendDailyReminderToDisabledUsers() {
-//        log.info("Running daily email job for disabled users at ${new Date()}")
-//        println("EmailSchedulerService triggered at ${new Date()}")
-//
-//        List<User> disabledUsers = User.findAllByEnabled(false)
-//        disabledUsers.each { user ->
-//            try {
-//                mailService.sendMail {
-//                    to user.email
-//                    subject "We're still waiting for you 😊"
-//                    body "Hi ${user.firstName},\n\nIt looks like your account isn't enabled yet."
-//                }
-//                log.info("Email sent to ${user.email}")
-//            } catch (Exception e) {
-//                log.error("Failed to send email to ${user.email}: ${e.message}")
-//            }
-//        }
-//    }
-
     // Track offset per day
     private static int offset = 0
     private static Date lastResetDate = null

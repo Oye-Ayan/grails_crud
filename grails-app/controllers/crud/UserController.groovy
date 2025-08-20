@@ -50,21 +50,27 @@ class UserController {
         redirect(action: 'booksList')
     }
 
+//    def myPurchases() {
+//        def sessionUser = session.user
+//        def purchases = userService.getMyPurchases(sessionUser.id)
+//        def topBooks = userService.getBooksSortedByPopularity()
+//
+//        render(view: "myPurchases", model: [purchases: purchases, topBooks: topBooks])
+//    }
+
     def myPurchases() {
         def sessionUser = session.user
         def purchases = userService.getMyPurchases(sessionUser.id)
         def topBooks = userService.getBooksSortedByPopularity()
-
+        topBooks.each {
+            println "Book: ${it.book.bookName}, Purchased: ${it.count} times"
+        }
         render(view: "myPurchases", model: [purchases: purchases, topBooks: topBooks])
     }
-
-
 
     def myBooks() {
         def sessionUser = session.user
         def myBooks = userService.getMyBooks(sessionUser.id)
         render(view: "myBooks", model: [books: myBooks])
     }
-
-
 }
