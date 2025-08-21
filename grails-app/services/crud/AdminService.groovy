@@ -23,16 +23,16 @@ class AdminService {
         if (!lastResetDate || lastResetDate.clearTime() != now.clearTime()) {
             offset = 0
             lastResetDate = now
-            log.info("Resetting email offset for new day: ${now}")
+            println("Resetting email offset for new day: ${now}")
         }
 
-        log.info("Running daily email job at ${now}, starting offset: ${offset}")
+        println("Running daily email job at ${now}, starting offset: ${offset}")
 
         // Fetch next 5 disabled users
         List<User> disabledUsers = User.findAllByEnabled(false, [max: 5, offset: offset])
 
         if (!disabledUsers) {
-            log.info("No more disabled users left to email today.")
+            println("No more disabled users left to email today.")
             return
         }
 

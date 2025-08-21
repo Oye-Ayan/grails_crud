@@ -1,15 +1,3 @@
-//package crud
-//
-//class Purchase {
-//    User user
-//    Date date = new Date()
-//    Book book
-//
-//
-//
-//    static constraints = {
-//    }
-//}
 package crud
 
 class Purchase {
@@ -23,17 +11,25 @@ class Purchase {
         user nullable: false
         book nullable: false
     }
-
-    static List<Map> getBooksSortedByPopularity() {
-        def topBooksQuery = Purchase.createCriteria().list {
+//    static List<Map> getBooksSortedByPopularity() {
+//        def topBooksQuery = Purchase.createCriteria().list {
+//            projections {
+//                groupProperty("book")      // group by book
+//                count("id", 'purchaseCount') // count purchases
+//            }
+//            order("purchaseCount", "desc")
+//        }
+//        return topBooksQuery.collect { row ->
+//            [book: row[0], count: row[1]]
+//        }
+//    }
+    static namedQueries = {
+        booksSortedByPopularity {
             projections {
-                groupProperty("book")      // group by book
-                count("id", 'purchaseCount') // count purchases
+                groupProperty("book")       // group by book
+                count("id", "purchaseCount") // har book ka total purchase count
             }
-            order("purchaseCount", "desc")
-        }
-        return topBooksQuery.collect { row ->
-            [book: row[0], count: row[1]]
+            order("purchaseCount", "desc") // bought most top pr
         }
     }
 }

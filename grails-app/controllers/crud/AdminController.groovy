@@ -21,14 +21,14 @@ class AdminController {
             render(view: 'addUser')
             return
         }
-                String firstName = request.getParameter('firstName')
-                String lastName=request.getParameter('lastName')
-                String email= request.getParameter('email')
-                String phone= request.getParameter('phone')
-                String title= request.getParameter('title')
-                String password=request.getParameter('password')
-                String role= request.getParameter('role')
-                boolean enabled=request.getParameter('enabled').toBoolean()
+                String firstName = request?.getParameter('firstName')
+                String lastName=request?.getParameter('lastName')
+                String email= request?.getParameter('email')
+                String phone= request?.getParameter('phone')
+                String title= request?.getParameter('title')
+                String password=request?.getParameter('password')
+                String role= request?.getParameter('role')
+                boolean enabled=request?.getParameter('enabled')?.toBoolean()
         try {adminService.addUser(firstName,lastName,email,phone,title,password,role,enabled)
             flash.message = "User has been Added successfully"
             redirect(action: "showUsers")

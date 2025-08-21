@@ -59,9 +59,16 @@ class UserService {
 //        }
 //        return topBooksList
 //    }
+////
+//    def getBooksSortedByPopularity() {
+//        return Purchase.getBooksSortedByPopularity()  //domain
+//    }
 
-    def getBooksSortedByPopularity() {
-        return Purchase.getBooksSortedByPopularity()  //domain
+    static List<Map> getBooksSortedByPopularity() {
+        def topBooksQuery = Purchase.booksSortedByPopularity().list()
+        return topBooksQuery.collect { row ->
+            [book: row[0], count: row[1]]
+        }
     }
 
 }
